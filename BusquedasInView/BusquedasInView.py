@@ -186,14 +186,16 @@ class BusquedasInView(QGroupBox):
 
     def ingresarDato(self):
         try:
-            res = self.estructura.ingresarDato(int(self.campoCampResNum.toPlainText()))
-            self.imprimirTexto(res)
-            self.refrescarTabla()
-            # nombre = self.estructura.ingresarDato(int(self.campoNombreA.toPlainText()))
-            # edad = self.estructura.ingresarDato(int(self.campoEdadA.toPlainText()))
-            nombre="juan"
-            edad=12
-            self.campos.insertar(int(self.campoCampResNum.toPlainText()),nombre,edad)
+            
+            nombre = str(self.campoNombreA.toPlainText())
+            edad = 0 if self.campoEdadA.toPlainText()=="" else int(self.campoEdadA.toPlainText())
+            if(nombre!='' and edad!=0):
+                res = self.estructura.ingresarDato(int(self.campoCampResNum.toPlainText()))
+                self.imprimirTexto(res)
+                self.refrescarTabla()
+                self.campos.insertar(int(self.campoCampResNum.toPlainText()),nombre,edad)
+            else:
+                self.imprimirTexto("Error: Por favor ingrese el nombre y la edad")
         except Exception as e:
             error = QMessageBox()
             error.setText("La clave debe ser Numerica")
