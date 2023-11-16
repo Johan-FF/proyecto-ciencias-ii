@@ -7,10 +7,14 @@ from BusquedasInView.Estructuras.Binario import Binario
 from BusquedasInView.Estructuras.EstructuraInterna import EstructuraInterna
 from BusquedasInView.Estructuras.Secuencial import Secuencial
 
+
+from CamposView.Campos import Campos
 class BusquedasInView(QGroupBox):
     def __init__(self, p:QWidget):
         super().__init__(p)
 
+        # variable para la informacion
+        self.campos=Campos()
         #variables logicas
         self.estructura:EstructuraInterna = None
         self.datoBuscado : int = None
@@ -157,6 +161,11 @@ class BusquedasInView(QGroupBox):
             res = self.estructura.ingresarDato(int(self.campoCampResNum.toPlainText()))
             self.imprimirTexto(res)
             self.refrescarTabla()
+            # nombre = self.estructura.ingresarDato(int(self.campoNombreA.toPlainText()))
+            # edad = self.estructura.ingresarDato(int(self.campoEdadA.toPlainText()))
+            nombre="juan"
+            edad=12
+            self.campos.insertar(int(self.campoCampResNum.toPlainText()),nombre,edad)
         except Exception as e:
             error = QMessageBox()
             error.setText("La clave debe ser Numerica")
@@ -170,6 +179,7 @@ class BusquedasInView(QGroupBox):
             res = self.estructura.busqueda(int(self.campoCampResNum.toPlainText()))
             self.imprimirTexto(res)
             self.datoBuscado = int(self.campoCampResNum.toPlainText())
+            self.imprimirTexto(self.campos.obtener(self.datoBuscado))
             self.refrescarTabla()
         except Exception as e:
             error = QMessageBox()
