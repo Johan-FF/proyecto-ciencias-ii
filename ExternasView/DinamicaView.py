@@ -25,12 +25,12 @@ class DinamicaView(QtW.QGroupBox):
         self.setStyleSheet("background-color:#DECCA6")
 
         label = QtW.QLabel("Lista de datos:", self)
-        label.move(550, 240)
+        label.move(840, 240)
         label.setFont(QFont("Arial", 10, QFont.Bold))
         self.tabla = QtW.QTableWidget(self)
         self.tabla.setColumnCount(2)
         self.tabla.setHorizontalHeaderLabels(["Lista espera", "Registro"])
-        self.tabla.setGeometry(550, 280, 500, 390)
+        self.tabla.setGeometry(840, 280, 200, 390)
         self.tabla.horizontalScrollBar().setVisible(False)
         self.tabla.setColumnWidth(0, 100)
         self.tabla.setColumnWidth(1, 100)
@@ -104,15 +104,34 @@ class DinamicaView(QtW.QGroupBox):
         self.ingresoDato.setFont(QFont("Arial", 10))
         self.ingresoDato.setStyleSheet("background-color:#EBE6D2")
 
+        label = QtW.QLabel("Ingresar nombre:", self)
+        label.move(170, 360)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoNombreA = QtW.QTextEdit(self)
+        self.campoNombreA.setFrameStyle(1)
+        self.campoNombreA.move(170, 380)
+        self.campoNombreA.resize(140, 30)
+        self.campoNombreA.setFont(QFont("Arial", 10))
+        self.campoNombreA.setStyleSheet("background-color:#EBE6D2")
+
+        label = QtW.QLabel("Ingresar edad:", self)
+        label.move(320, 360)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoEdadA = QtW.QTextEdit(self)
+        self.campoEdadA.setFrameStyle(1)
+        self.campoEdadA.move(320, 380)
+        self.campoEdadA.resize(140, 30)
+        self.campoEdadA.setFont(QFont("Arial", 10))
+        self.campoEdadA.setStyleSheet("background-color:#EBE6D2")
+
         self.labelSuccess = QtW.QLabel("Proceso: ", self)
         self.labelSuccess.move(20, 420)
         self.labelSuccess.setFont(QFont("Arial", 10, QFont.Bold))
         self.labelSuccess.resize(400, 30)
-
         self.registroProcess = QtW.QTextEdit(self)
         self.registroProcess.setFrameStyle(1)
         self.registroProcess.move(20, 460)
-        self.registroProcess.resize(500, 160)
+        self.registroProcess.resize(730, 160)
         self.registroProcess.setReadOnly(True)
         self.registroProcess.setFont(QFont("Arial", 10))
         self.registroProcess.setStyleSheet("QTextEdit{border:1px solid black; background-color:#D0C0A7}")
@@ -125,7 +144,7 @@ class DinamicaView(QtW.QGroupBox):
         self.bnEstructura.clicked.connect(self.testEstructure)
 
         self.bnIngresar = QtW.QPushButton("Agregar clave", self)
-        self.bnIngresar.setGeometry(180, 380, 130, 30)
+        self.bnIngresar.setGeometry(470, 380, 130, 30)
         self.bnIngresar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")
@@ -133,7 +152,7 @@ class DinamicaView(QtW.QGroupBox):
         self.bnIngresar.setEnabled(False)
 
         self.bnTerminar = QtW.QPushButton("Eliminar clave", self)
-        self.bnTerminar.setGeometry(320, 380, 130, 30)
+        self.bnTerminar.setGeometry(610, 380, 130, 30)
         self.bnTerminar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")
@@ -141,7 +160,7 @@ class DinamicaView(QtW.QGroupBox):
         self.bnTerminar.setEnabled(False)
 
         self.bnReiniciar = QtW.QPushButton("Reiniciar", self)
-        self.bnReiniciar.setGeometry(20, 640, 500, 30)
+        self.bnReiniciar.setGeometry(140, 640, 500, 30)
         self.bnReiniciar.setStyleSheet("QPushButton{background-color:#D7A184; border:1px solid black;}"
                                    "QPushButton::hover{background-color :#D4C2AD;}"
                                    "QPushButton::pressed{background-color:#EFDFCC; }")

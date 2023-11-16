@@ -55,7 +55,7 @@ class ExternasView(QtW.QGroupBox):
         self.tamanoEstructura.setFont(QFont("Arial", 10))
         self.tamanoEstructura.setStyleSheet("background-color:#EBE6D2")
 
-        label = QtW.QLabel("Ingresar clave (Claves numéricas):", self)
+        label = QtW.QLabel("Ingresar clave:", self)
         label.move(20, 200)
         label.setFont(QFont("Arial", 10, QFont.Bold))
         self.ingresoDato = QtW.QTextEdit(self)
@@ -64,6 +64,26 @@ class ExternasView(QtW.QGroupBox):
         self.ingresoDato.resize(140, 30)
         self.ingresoDato.setFont(QFont("Arial", 10))
         self.ingresoDato.setStyleSheet("background-color:#EBE6D2")
+
+        label = QtW.QLabel("Ingresar nombre:", self)
+        label.move(170, 200)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoNombreA = QtW.QTextEdit(self)
+        self.campoNombreA.setFrameStyle(1)
+        self.campoNombreA.move(170, 230)
+        self.campoNombreA.resize(140, 30)
+        self.campoNombreA.setFont(QFont("Arial", 10))
+        self.campoNombreA.setStyleSheet("background-color:#EBE6D2")
+
+        label = QtW.QLabel("Ingresar edad:", self)
+        label.move(320, 200)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoEdadA = QtW.QTextEdit(self)
+        self.campoEdadA.setFrameStyle(1)
+        self.campoEdadA.move(320, 230)
+        self.campoEdadA.resize(140, 30)
+        self.campoEdadA.setFont(QFont("Arial", 10))
+        self.campoEdadA.setStyleSheet("background-color:#EBE6D2")
 
         label = QtW.QLabel("Tipo de búsqueda:", self)
         label.move(20, 110)
@@ -89,11 +109,11 @@ class ExternasView(QtW.QGroupBox):
         self.registroProcess.setStyleSheet("QTextEdit{border:1px solid black; background-color:#D0C0A7}")
 
         label = QtW.QLabel("Clave a buscar:", self)
-        label.move(20, 290)
+        label.move(20, 320)
         label.setFont(QFont("Arial", 10, QFont.Bold))
         self.txbuscar = QtW.QTextEdit(self)
         self.txbuscar.setFrameStyle(1)
-        self.txbuscar.move(20, 320)
+        self.txbuscar.move(20, 350)
         self.txbuscar.resize(140, 30)
         self.txbuscar.setFont(QFont("Arial", 10))
         self.txbuscar.setStyleSheet("background-color:#EBE6D2")
@@ -106,7 +126,7 @@ class ExternasView(QtW.QGroupBox):
         self.bnEstructura.clicked.connect(self.testEstructure)
 
         self.bnIngresar = QtW.QPushButton("Agregar clave", self)
-        self.bnIngresar.setGeometry(180, 230, 130, 30)
+        self.bnIngresar.setGeometry(50, 270, 170, 30)
         self.bnIngresar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")
@@ -114,7 +134,7 @@ class ExternasView(QtW.QGroupBox):
         self.bnIngresar.setEnabled(False)
 
         self.bnTerminar = QtW.QPushButton("Eliminar clave", self)
-        self.bnTerminar.setGeometry(320, 230, 130, 30)
+        self.bnTerminar.setGeometry(250, 270, 170, 30)
         self.bnTerminar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")
@@ -122,7 +142,7 @@ class ExternasView(QtW.QGroupBox):
         self.bnTerminar.setEnabled(False)
 
         self.bnBuscar = QtW.QPushButton("Buscar", self)
-        self.bnBuscar.setGeometry(180, 320, 130, 30)
+        self.bnBuscar.setGeometry(180, 350, 130, 30)
         self.bnBuscar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")

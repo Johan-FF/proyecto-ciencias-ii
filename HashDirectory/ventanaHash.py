@@ -57,15 +57,35 @@ class HashView(QtW.QGroupBox):
         self.tamanoEstructura.setFont(QFont("Arial", 10))
         self.tamanoEstructura.setStyleSheet("background-color:#EBE6D2")
 
-        label = QtW.QLabel("Ingresar Registro (Solo se admiten registro numericos)", self)
+        label = QtW.QLabel("Ingresar Registro", self)
         label.move(10, 100)
         label.setFont(QFont("Arial", 10, QFont.Bold))
         self.ingresoDato = QtW.QTextEdit(self)
         self.ingresoDato.setFrameStyle(1)
         self.ingresoDato.move(10, 140)
-        self.ingresoDato.resize(200, 30)
+        self.ingresoDato.resize(150, 30)
         self.ingresoDato.setFont(QFont("Arial", 10))
         self.ingresoDato.setStyleSheet("background-color:#EBE6D2")
+
+        label = QtW.QLabel("Nombre", self)
+        label.move(190, 100)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoNombreA = QtW.QTextEdit(self)
+        self.campoNombreA.setFrameStyle(1)
+        self.campoNombreA.move(190, 140)
+        self.campoNombreA.resize(200, 30)
+        self.campoNombreA.setFont(QFont("Arial", 10))
+        self.campoNombreA.setStyleSheet("background-color:#EBE6D2")
+
+        label = QtW.QLabel("Edad", self)
+        label.move(420, 100)
+        label.setFont(QFont("Arial", 10, QFont.Bold))
+        self.campoEdadA = QtW.QTextEdit(self)
+        self.campoEdadA.setFrameStyle(1)
+        self.campoEdadA.move(420, 140)
+        self.campoEdadA.resize(100, 30)
+        self.campoEdadA.setFont(QFont("Arial", 10))
+        self.campoEdadA.setStyleSheet("background-color:#EBE6D2")
 
         self.labelWarning = QtW.QLabel("Error: ", self)
         self.labelWarning.move(10, 300)
@@ -114,7 +134,7 @@ class HashView(QtW.QGroupBox):
         self.bnEstructura.clicked.connect(self.testEstructure)
 
         self.bnIngresar = QtW.QPushButton("Agregar", self)
-        self.bnIngresar.setGeometry(220, 140, 170, 30)
+        self.bnIngresar.setGeometry(570, 140, 170, 30)
         self.bnIngresar.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
                                         "QPushButton::hover{background-color :#8fa89a;}"
                                         "QPushButton::pressed{background-color:#6e8679; }")
@@ -122,7 +142,7 @@ class HashView(QtW.QGroupBox):
         self.bnIngresar.clicked.connect(self.ingresarDato)
 
         self.bnReiniciar = QtW.QPushButton("Reiniciar", self)
-        self.bnReiniciar.setGeometry(570, 140, 170, 30)
+        self.bnReiniciar.setGeometry(570, 260, 170, 30)
         self.bnReiniciar.setStyleSheet("QPushButton{background-color:#D7A184; border:1px solid black;}"
                                    "QPushButton::hover{background-color :#D4C2AD;}"
                                    "QPushButton::pressed{background-color:#EFDFCC; }")
