@@ -7,6 +7,8 @@ from PyQt5 import QtGui
 
 from HashDirectory.Hash import TransfClaves
 
+
+from CamposView.Campos import Campos
 class HashView(QtW.QGroupBox):
 
     def __init__(self, p: QWidget):
@@ -15,6 +17,10 @@ class HashView(QtW.QGroupBox):
         self.hash = None
 
         self.setStyleSheet("background-color:#DECCA6")
+
+
+        # variable para la informacion
+        self.campos=Campos()
 
         self.tabla = QtW.QTableWidget(self)
         self.tabla.setColumnCount(2)
@@ -149,7 +155,8 @@ class HashView(QtW.QGroupBox):
         self.bnReiniciar.setFont(QFont("Arial", 10))
         self.bnReiniciar.clicked.connect(self.reiniciar)
         self.bnReiniciar.setEnabled(False)
-
+    def imprimirTexto(self,texto:str):
+        self.registroProcess.setText(self.registroProcess.toPlainText()+"\n >"+texto)
     def testEstructure(self):
         t = 0
         try:
@@ -183,15 +190,22 @@ class HashView(QtW.QGroupBox):
             if(d <= 0):
                 self.errWarning("Por Favor ingrese un Registro numerico mayor a 0")
                 return
-        except:
+        except Exception:
             self.errWarning("Ingresó por Registro, caracteres o letras, ingrese registros numericos")
             return
 
-        self.hash.ingresarValor(d)
-        self.processSuccess("Dato Ingresado (" + str(d) + ")")
-        self.errWarning("")
-        self.cargarDatos()
-        self.registrarProceso()
+        nombre = str(self.campoNombreA.toPlainText())
+        edad = 0 if self.campoEdadA.toPlainText()=="" else int(self.campoEdadA.toPlainText())
+        if(nombre!='' and edad!=0):
+            self.hash.ingresarValor(d)
+            self.processSuccess("Dato Ingresado (" + str(d) + ")")
+            self.errWarning("")
+            self.cargarDatos()
+            self.registrarProceso()
+            self.campos.insertar(d,nombre,edad)
+        else:
+            self.imprimirTexto("Error: Por favor ingrese el nombre y la edad")
+        
     def errWarning(self, mensaje):
         self.labelWarning.setText("Error: " + mensaje)
 
@@ -207,6 +221,7 @@ class HashView(QtW.QGroupBox):
         self.tamanoEstructura.setEnabled(True)
         self.bnReiniciar.setEnabled(False)
         self.registroProcess.setText("")
+        self.campos.reset()
         self.labelSuccess.setText("Success:")
 
     def crearTabla(self):
@@ -233,8 +248,10 @@ class HashView(QtW.QGroupBox):
         try:
             if(self.txbuscar.toPlainText() != ''):
                 r = int(self.txbuscar.toPlainText())
+            
         except:
             self.imprimirTexto("Ingreso para registro caracteres no numericos")
             return
 
         self.registroProcess.setText(self.hash.buscarElemento(r))
+        self.imprimirTexto(self.campos.obtener(r))
