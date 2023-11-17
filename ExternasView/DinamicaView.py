@@ -7,6 +7,7 @@ from PyQt5 import QtGui
 
 from ExternasView.FuncionesHash import TransfClaves
 from ExternasView import Dinamica as D
+from CamposView.Campos import Campos
 
 
 class DinamicaView(QtW.QGroupBox):
@@ -14,6 +15,8 @@ class DinamicaView(QtW.QGroupBox):
     def __init__(self, p: QWidget):
         
         super().__init__(p)
+
+        self.campos = Campos()
 
         self.cubetas = 0
         self.registros = 0
@@ -159,6 +162,14 @@ class DinamicaView(QtW.QGroupBox):
         self.bnTerminar.clicked.connect(self.eliminarDato)
         self.bnTerminar.setEnabled(False)
 
+        self.bnVerCampos = QtW.QPushButton("Ver campos clave", self)
+        self.bnVerCampos.setGeometry(470, 420, 130, 30)
+        self.bnVerCampos.setStyleSheet("QPushButton{background-color:#b0c9bb; border:1px solid black;}"
+                                        "QPushButton::hover{background-color :#8fa89a;}"
+                                        "QPushButton::pressed{background-color:#6e8679; }")
+        self.bnVerCampos.clicked.connect(self.verDatos)
+        self.bnVerCampos.setEnabled(False)
+
         self.bnReiniciar = QtW.QPushButton("Reiniciar", self)
         self.bnReiniciar.setGeometry(140, 640, 500, 30)
         self.bnReiniciar.setStyleSheet("QPushButton{background-color:#D7A184; border:1px solid black;}"
@@ -194,6 +205,7 @@ class DinamicaView(QtW.QGroupBox):
         self.bnIngresar.setEnabled(True)
         self.bnTerminar.setEnabled(True)
         self.bnReiniciar.setEnabled(True)
+        self.bnVerCampos.setEnabled(True)
 
     def ingresarDato(self):
         d = 0
@@ -203,6 +215,25 @@ class DinamicaView(QtW.QGroupBox):
             if(d <= 0):
                 self.imprimirTexto("Por Favor ingrese una clave mayor a 0")
                 return
+            
+            nombre = self.campoNombreA.toPlainText()
+            edad = self.campoEdadA.toPlainText()
+            camposValidos = True
+            if not nombre.strip():
+                self.imprimirTexto("Por favor ingrese un nombre")
+                camposValidos = False
+            if not edad.isdigit():
+                self.imprimirTexto("Por ingrese un número en la edad")
+                camposValidos = False
+            else:
+                edad = int(edad)
+                if edad<0:
+                    self.imprimirTexto("La edad debe ser mayor a 0")
+                    camposValidos = False
+            if not camposValidos:
+                return
+            
+            self.campos.insertar(d, nombre, edad)
             if d not in self.listaDatos:
                 self.estructura.historico = []
                 self.estructura.event = False
@@ -236,6 +267,7 @@ class DinamicaView(QtW.QGroupBox):
                 return
             else:
                 self.listaDatos.remove(d)
+                self.campos.eliminar(d)
                 self.tabla.setRowCount(0)
                 self.crearTabla()
                 self.estructura.deleteClave(d)
@@ -291,6 +323,7 @@ class DinamicaView(QtW.QGroupBox):
         self.bnReiniciar.setEnabled(False)
         self.bnTerminar.setEnabled(False)
         self.bnIngresar.setEnabled(False)
+        self.bnVerCampos.setEnabled(False)
         self.registroProcess.setText("")
         
     def imprimirTexto(self,texto:str):
@@ -303,3 +336,15 @@ class DinamicaView(QtW.QGroupBox):
         error.setStyleSheet("background-color:white; border: 0pc solid white")
         error.setFont(QFont("Arial", 10, QFont.Bold))
         error.exec_()
+
+    def verDatos(self):
+        try:
+            mensaje = self.campos.obtener(int(self.ingresoDato.toPlainText()))
+        except:
+            mensaje = 'Clave invalida'
+        emergente = QtW.QMessageBox(self)
+        emergente.setIcon(QtW.QMessageBox.Icon.Information)
+        emergente.setText(mensaje)
+        emergente.setStyleSheet("background-color:white; border: 0pc solid white")
+        emergente.setFont(QFont("Arial", 10, QFont.Bold))
+        emergente.exec_()

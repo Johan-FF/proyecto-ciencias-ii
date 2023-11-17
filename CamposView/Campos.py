@@ -8,10 +8,15 @@ class Campos:
     # }
     # }
     # (son diccionarios anidados)
-    diccionario = {}
+
+    def __init__(self) -> None:
+        self.diccionario = {}
+        
 
     # funciones que se hacen en el diccionario
     def insertar(self,clave,_nombre,_edad):
+        if clave in self.diccionario.keys():
+            return False
         entrada={}
         entrada['nombre']=_nombre
         entrada['edad']=_edad

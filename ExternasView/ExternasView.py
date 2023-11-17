@@ -7,6 +7,7 @@ from PyQt5 import QtGui
 
 from ExternasView.FuncionesHash import TransfClaves
 from ExternasView import BinariaSecuencial as BS
+from CamposView.Campos import Campos
 
 
 class ExternasView(QtW.QGroupBox):
@@ -14,6 +15,9 @@ class ExternasView(QtW.QGroupBox):
     def __init__(self, p: QWidget):
         
         super().__init__(p)
+
+        # variable para simulacion
+        self.campos=Campos()
 
         self.rango = None
         self.listaDatos = []
@@ -197,16 +201,35 @@ class ExternasView(QtW.QGroupBox):
         d = 0
         try:
             if self.ingresoDato.toPlainText() != '':
-
                 d = int(self.ingresoDato.toPlainText())
 
             if d <= 0:
-
                 self.imprimirTexto("Por Favor ingrese una clave mayor a 0")
                 return
             
+            
+            nombre = self.campoNombreA.toPlainText()
+            edad = self.campoEdadA.toPlainText()
+            camposValidos = True
+            if not nombre.strip():
+                self.imprimirTexto("Por favor ingrese un nombre")
+                camposValidos = False
+            if not edad.isdigit():
+                self.imprimirTexto("Por ingrese un número en la edad")
+                camposValidos = False
+            else:
+                edad = int(edad)
+                if edad<0:
+                    self.imprimirTexto("La edad debe ser mayor a 0")
+                    camposValidos = False
+            
+            if not camposValidos:
+                return
+            
+            self.campos.insertar(d, nombre, edad)
+
+            
             if self.metodo == "Mod" or self.metodo == "Cuadratico" or self.metodo == "Plegamiento" or self.metodo == "Truncamiento":
-                
                 if len(str(d)) != 4:
                     self.imprimirTexto("La longitud de la clave debe ser 4")
                 if d not in self.listaDatos:
@@ -215,12 +238,14 @@ class ExternasView(QtW.QGroupBox):
                     self.imprimirTexto("Dato Ingresado (" + str(d) + ")")
                     self.funcionesHash()
                     self.ingresoDato.setText("")
+                    self.campoNombreA.setText('')
+                    self.campoEdadA.setText('')
+                    self.ingresoDato.setFocus()
                 else:
                     self.imprimirTexto("La clave ya se encuentra en la estructura")
                     return
             
             if self.metodo == "Secuencial" or self.metodo == "Binaria":
-            
                 if len(self.listaDatos) > self.rango-1:
                     self.imprimirTexto("La estructura ya está llena")
                     return
@@ -230,6 +255,9 @@ class ExternasView(QtW.QGroupBox):
                     self.cargarDatosSecuencialesBinarios()
                     self.imprimirTexto("Dato Ingresado (" + str(d) + ")")
                     self.ingresoDato.setText("")
+                    self.campoNombreA.setText('')
+                    self.campoEdadA.setText('')
+                    self.ingresoDato.setFocus()
                 else:
                     self.imprimirTexto("La clave ya se encuentra en la estructura")
                     return
@@ -252,6 +280,7 @@ class ExternasView(QtW.QGroupBox):
                 return
             else:
                 self.listaDatos.remove(d)
+                self.campos.eliminar(d)
                 self.tabla.setRowCount(0)
                 self.crearTabla()
                 self.cargarDatos()
@@ -309,6 +338,9 @@ class ExternasView(QtW.QGroupBox):
                 for i in self.hash.buscarElemento(j):
                     if r == i:
                         self.imprimirTexto(f"El dato {r} se encuentra ubicado en la cubeta {j}, en el bloque {bloque}")
+                        campos = self.campos.obtener(int(r))
+                        if not campos.startswith('El registro con la clave'):
+                            self.imprimirTexto(f"   {campos}")
                     bloque += 1
                 j += 1
 
@@ -326,6 +358,9 @@ class ExternasView(QtW.QGroupBox):
         bloque, numeroBloque = BS.busqueda_por_bloques(multilista, int(r))
         ob = BS.Secuencial(bloque, numeroBloque, int(r))
         self.registroProcess.setText(BS.Secuencial.busqueda(ob))
+        campos = self.campos.obtener(int(r))
+        if not campos.startswith('El registro con la clave'):
+            self.imprimirTexto(f"   {campos}")
 
         self.txbuscar.setText("")
 
@@ -343,6 +378,9 @@ class ExternasView(QtW.QGroupBox):
         bloque, numeroBloque = BS.busqueda_por_bloques(multilista, int(r))
         tt = BS.Binario(bloque, numeroBloque, int(r))
         self.registroProcess.setText(BS.Binario.busqueda(tt))
+        campos = self.campos.obtener(int(r))
+        if not campos.startswith('El registro con la clave'):
+            self.imprimirTexto(f"   {campos}")
         
         self.txbuscar.setText("")
 
